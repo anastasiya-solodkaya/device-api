@@ -5,7 +5,7 @@ import ru.asolodkaia.devicesapi.database.model.AvailableDevice;
 import ru.asolodkaia.devicesapi.database.model.Brand;
 import ru.asolodkaia.devicesapi.database.model.Model;
 import ru.asolodkaia.devicesapi.database.repository.AvailableDeviceRepository;
-import ru.asolodkaia.devicesapi.dto.DeviceDTO;
+import ru.asolodkaia.devicesapi.dto.DeviceAvailabilityDTO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -21,12 +21,12 @@ public class JPADevicesService implements DevicesService {
     }
 
     @Override
-    public List<DeviceDTO> listAllDevices() {
+    public List<DeviceAvailabilityDTO> listAllDevices() {
         return repository.findAll().stream().map(JPADevicesService::toDevice).collect(Collectors.toList());
     }
 
     @Override
-    public DeviceDTO get(int id) {
+    public DeviceAvailabilityDTO get(int id) {
         AvailableDevice device = repository.findById(id);
         return device == null ? null : toDevice(device);
     }
@@ -57,12 +57,12 @@ public class JPADevicesService implements DevicesService {
         return true;
     }
 
-    private static DeviceDTO toDevice(AvailableDevice availableDevice) {
+    private static DeviceAvailabilityDTO toDevice(AvailableDevice availableDevice) {
         Timestamp bookedTimestamp = availableDevice.getBookedTimestamp();
         LocalDateTime bookedDate = bookedTimestamp == null ? null : bookedTimestamp.toLocalDateTime();
         Model model = availableDevice.getModel();
         Brand brand = model.getBrand();
-        return new DeviceDTO.Builder()
+        return new DeviceAvailabilityDTO.Builder()
                 .id(availableDevice.getId())
                 .booked(bookedDate)
                 .booker(availableDevice.getBooker())
