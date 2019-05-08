@@ -1,0 +1,1 @@
+# REST API for accessing devices data
