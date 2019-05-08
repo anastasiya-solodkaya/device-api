@@ -3,8 +3,8 @@ package ru.asolodkaia.devicesapi.api;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.asolodkaia.devicesapi.DevicesService;
-import ru.asolodkaia.devicesapi.model.ActionResponse;
-import ru.asolodkaia.devicesapi.model.Device;
+import ru.asolodkaia.devicesapi.dto.ActionResponseDTO;
+import ru.asolodkaia.devicesapi.dto.DeviceDTO;
 import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class DeviceController {
             produces = {DEFAULT_CONTENT_TYPE}
     )
     @ResponseStatus(HttpStatus.OK)
-    public List<Device> list() {
+    public List<DeviceDTO> list() {
         return service.listAllDevices();
     }
 
@@ -35,10 +35,10 @@ public class DeviceController {
             consumes = {DEFAULT_CONTENT_TYPE}
     )
     @ResponseStatus(HttpStatus.OK)
-    public ActionResponse book(@PathVariable int id, @RequestBody BookingRequest request) {
+    public ActionResponseDTO book(@PathVariable int id, @RequestBody BookingRequest request) {
         boolean result = service.book(id, request.getBooker());
-        final Device device = service.get(id);
-        return new ActionResponse(result, device.getBooker());
+        final DeviceDTO device = service.get(id);
+        return new ActionResponseDTO(result, device.getBooker());
     }
 
     @PutMapping(
@@ -47,8 +47,8 @@ public class DeviceController {
             consumes = {DEFAULT_CONTENT_TYPE}
     )
     @ResponseStatus(HttpStatus.OK)
-    public ActionResponse release(@PathVariable int id) {
+    public ActionResponseDTO release(@PathVariable int id) {
         boolean result = service.release(id);
-        return new ActionResponse(result);
+        return new ActionResponseDTO(result);
     }
 }

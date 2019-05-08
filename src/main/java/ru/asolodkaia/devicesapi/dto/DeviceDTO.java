@@ -1,11 +1,11 @@
-package ru.asolodkaia.devicesapi.model;
+package ru.asolodkaia.devicesapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Device {
+public class DeviceDTO {
     private int id;
     private String brand;
     private String model;
@@ -14,11 +14,11 @@ public class Device {
     private LocalDateTime booked;
     private String comment;
 
-    public Device() {
+    public DeviceDTO() {
     }
 
-    public Device(int id, String brand, String model, String descriptiveName,
-                  String booker, LocalDateTime booked) {
+    public DeviceDTO(int id, String brand, String model, String descriptiveName,
+                     String booker, LocalDateTime booked) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -27,7 +27,7 @@ public class Device {
         this.booked = booked;
     }
 
-    public Device(int id, String brand, String model, String descriptiveName) {
+    public DeviceDTO(int id, String brand, String model, String descriptiveName) {
         this(id, brand, model, descriptiveName, null, null);
     }
 

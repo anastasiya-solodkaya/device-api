@@ -3,7 +3,7 @@ package ru.asolodkaia.devicesapi;
 import org.springframework.stereotype.Service;
 import ru.asolodkaia.devicesapi.database.model.AvailableDevice;
 import ru.asolodkaia.devicesapi.database.repository.AvailableDeviceRepository;
-import ru.asolodkaia.devicesapi.model.Device;
+import ru.asolodkaia.devicesapi.dto.DeviceDTO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -19,12 +19,12 @@ public class JPADevicesService implements DevicesService {
     }
 
     @Override
-    public List<Device> listAllDevices() {
+    public List<DeviceDTO> listAllDevices() {
         return repository.findAll().stream().map(JPADevicesService::toDevice).collect(Collectors.toList());
     }
 
     @Override
-    public Device get(int id) {
+    public DeviceDTO get(int id) {
         final AvailableDevice device = repository.findById(id);
         return device == null ? null : toDevice(device);
     }
@@ -54,8 +54,8 @@ public class JPADevicesService implements DevicesService {
         return true;
     }
 
-    private static Device toDevice(AvailableDevice availableDevice) {
-        final Device device = new Device();
+    private static DeviceDTO toDevice(AvailableDevice availableDevice) {
+        final DeviceDTO device = new DeviceDTO();
         final Timestamp bookedTimestamp = availableDevice.getBookedTimestamp();
         LocalDateTime bookedDate = bookedTimestamp == null ? null : bookedTimestamp.toLocalDateTime();
         device.setId(availableDevice.getId());

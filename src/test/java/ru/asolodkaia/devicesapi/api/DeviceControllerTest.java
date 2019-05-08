@@ -8,8 +8,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.asolodkaia.devicesapi.DevicesService;
 import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
-import ru.asolodkaia.devicesapi.model.ActionResponse;
-import ru.asolodkaia.devicesapi.model.Device;
+import ru.asolodkaia.devicesapi.dto.ActionResponseDTO;
+import ru.asolodkaia.devicesapi.dto.DeviceDTO;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ public class DeviceControllerTest {
     @Test
     public void listEmpty() {
         when(service.listAllDevices()).thenReturn(Collections.emptyList());
-        final List<Device> list = controller.list();
+        final List<DeviceDTO> list = controller.list();
         assertThat(list, is(empty()));
         verify(service, times(1)).listAllDevices();
         verifyNoMoreInteractions(service);
@@ -44,13 +44,13 @@ public class DeviceControllerTest {
 
     @Test
     public void listNonEmpty() {
-        final List<Device> expected = Arrays.asList(
-                new Device(1, "samsung", "s7", "Samsung Galaxy S7"),
-                new Device(2, "samsung", "s8", "Samsung Galaxy S8",
+        final List<DeviceDTO> expected = Arrays.asList(
+                new DeviceDTO(1, "samsung", "s7", "Samsung Galaxy S7"),
+                new DeviceDTO(2, "samsung", "s8", "Samsung Galaxy S8",
                         "Mr. John", LocalDateTime.parse("2019-01-21T05:30:00"))
         );
         when(service.listAllDevices()).thenReturn(expected);
-        final List<Device> list = controller.list();
+        final List<DeviceDTO> list = controller.list();
         assertThat(list, is(expected));
         verify(service, times(1)).listAllDevices();
         verifyNoMoreInteractions(service);
@@ -59,14 +59,14 @@ public class DeviceControllerTest {
     @Test
     public void bookExistingSucceeded() {
         String expectedBooker = "Mr. Josh";
-        Device device =
-                new Device(1, "", "", "", expectedBooker, LocalDateTime.now());
+        DeviceDTO device =
+                new DeviceDTO(1, "", "", "", expectedBooker, LocalDateTime.now());
         BookingRequest request = new BookingRequest();
         request.setBooker(expectedBooker);
 
         when(service.book(device.getId(), request.getBooker())).thenReturn(true);
         when(service.get(device.getId())).thenReturn(device);
-        ActionResponse response = controller.book(device.getId(), request);
+        ActionResponseDTO response = controller.book(device.getId(), request);
 
         assertThat(response.isSuccess(), is(true));
         assertThat(response.getBooker(), is(expectedBooker));
@@ -78,14 +78,14 @@ public class DeviceControllerTest {
     @Test
     public void bookExistingFailed() {
         String expectedBooker = "Mr. Josh";
-        Device device =
-                new Device(1, "", "", "", expectedBooker, LocalDateTime.now());
+        DeviceDTO device =
+                new DeviceDTO(1, "", "", "", expectedBooker, LocalDateTime.now());
         BookingRequest request = new BookingRequest();
         request.setBooker("Ms. Naya");
 
         when(service.book(device.getId(), request.getBooker())).thenReturn(false);
         when(service.get(device.getId())).thenReturn(device);
-        ActionResponse response = controller.book(device.getId(), request);
+        ActionResponseDTO response = controller.book(device.getId(), request);
 
         assertThat(response.isSuccess(), is(false));
         assertThat(response.getBooker(), is(expectedBooker));
@@ -99,7 +99,7 @@ public class DeviceControllerTest {
         int deviceId = 1;
 
         when(service.release(anyInt())).thenReturn(true);
-        ActionResponse response = controller.release(deviceId);
+        ActionResponseDTO response = controller.release(deviceId);
         assertThat(response.isSuccess(), is(true));
 
         verify(service, times(1)).release(deviceId);
@@ -111,7 +111,7 @@ public class DeviceControllerTest {
         int deviceId = 1;
 
         when(service.release(anyInt())).thenReturn(false);
-        ActionResponse response = controller.release(deviceId);
+        ActionResponseDTO response = controller.release(deviceId);
         assertThat(response.isSuccess(), is(false));
 
         verify(service, times(1)).release(deviceId);
