@@ -2,6 +2,7 @@ package ru.asolodkaia.devicesapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -14,24 +15,7 @@ public class DeviceDTO {
     private LocalDateTime booked;
     private String comment;
 
-    public DeviceDTO() {
-    }
-
-    public DeviceDTO(int id, String brand, String model, String descriptiveName,
-                     String booker, LocalDateTime booked) {
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.descriptiveName = descriptiveName;
-        this.booker = booker;
-        this.booked = booked;
-    }
-
-    public DeviceDTO(int id, String brand, String model, String descriptiveName) {
-        this(id, brand, model, descriptiveName, null, null);
-    }
-
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
@@ -43,7 +27,7 @@ public class DeviceDTO {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    private void setBrand(String brand) {
         this.brand = brand;
     }
 
@@ -51,7 +35,7 @@ public class DeviceDTO {
         return model;
     }
 
-    public void setModel(String model) {
+    private void setModel(String model) {
         this.model = model;
     }
 
@@ -59,7 +43,7 @@ public class DeviceDTO {
         return descriptiveName;
     }
 
-    public void setDescriptiveName(String descriptiveName) {
+    private void setDescriptiveName(String descriptiveName) {
         this.descriptiveName = descriptiveName;
     }
 
@@ -67,7 +51,7 @@ public class DeviceDTO {
         return booker;
     }
 
-    public void setBooker(String booker) {
+    private void setBooker(String booker) {
         this.booker = booker;
     }
 
@@ -75,7 +59,7 @@ public class DeviceDTO {
         return booked;
     }
 
-    public void setBooked(LocalDateTime booked) {
+    private void setBooked(LocalDateTime booked) {
         this.booked = booked;
     }
 
@@ -83,7 +67,64 @@ public class DeviceDTO {
         return comment;
     }
 
-    public void setComment(String comment) {
+    private void setComment(String comment) {
         this.comment = comment;
+    }
+    
+    public static class Builder {
+        private int id;
+        private String brand;
+        private String model;
+        private String descriptiveName;
+        private String booker;
+        private LocalDateTime booked;
+        private String comment;
+
+        public Builder id(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder brand(String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        public Builder model(String model) {
+            this.model = model;
+            return this;
+        }
+
+        public Builder descriptiveName(String descriptiveName) {
+            this.descriptiveName = descriptiveName;
+            return this;
+        }
+
+        public Builder booker(String booker) {
+            this.booker = booker;
+            return this;
+        }
+
+        public Builder booked(LocalDateTime booked) {
+            this.booked = booked;
+            return this;
+        }
+
+        public Builder comment(String comment) {
+            this.comment = comment;
+            return this;
+        }
+
+        public DeviceDTO build(){
+            final DeviceDTO device = new DeviceDTO();
+            device.setId(id);
+            device.setBooked(booked);
+            device.setBooker(booker);
+            device.setBrand(brand);
+            device.setModel(model);
+            device.setDescriptiveName(descriptiveName);
+            device.setComment(comment);
+            return device;
+        }
     }
 }

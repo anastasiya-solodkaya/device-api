@@ -11,7 +11,6 @@ import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
 import ru.asolodkaia.devicesapi.dto.ActionResponseDTO;
 import ru.asolodkaia.devicesapi.dto.DeviceDTO;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -45,9 +44,7 @@ public class DeviceControllerTest {
     @Test
     public void listNonEmpty() {
         final List<DeviceDTO> expected = Arrays.asList(
-                new DeviceDTO(1, "samsung", "s7", "Samsung Galaxy S7"),
-                new DeviceDTO(2, "samsung", "s8", "Samsung Galaxy S8",
-                        "Mr. John", LocalDateTime.parse("2019-01-21T05:30:00"))
+                createDeviceBuilder(1).build(), createDeviceBuilder(2).build()
         );
         when(service.listAllDevices()).thenReturn(expected);
         final List<DeviceDTO> list = controller.list();
@@ -59,8 +56,9 @@ public class DeviceControllerTest {
     @Test
     public void bookExistingSucceeded() {
         String expectedBooker = "Mr. Josh";
-        DeviceDTO device =
-                new DeviceDTO(1, "", "", "", expectedBooker, LocalDateTime.now());
+        DeviceDTO device = createDeviceBuilder(1)
+                .booker(expectedBooker)
+                .build();
         BookingRequest request = new BookingRequest();
         request.setBooker(expectedBooker);
 
@@ -78,8 +76,9 @@ public class DeviceControllerTest {
     @Test
     public void bookExistingFailed() {
         String expectedBooker = "Mr. Josh";
-        DeviceDTO device =
-                new DeviceDTO(1, "", "", "", expectedBooker, LocalDateTime.now());
+        DeviceDTO device = createDeviceBuilder(1)
+                .booker(expectedBooker)
+                .build();
         BookingRequest request = new BookingRequest();
         request.setBooker("Ms. Naya");
 
@@ -116,5 +115,14 @@ public class DeviceControllerTest {
 
         verify(service, times(1)).release(deviceId);
         verifyNoMoreInteractions(service);
+    }
+
+    private static DeviceDTO.Builder createDeviceBuilder(int id) {
+        return new DeviceDTO.Builder()
+                .id(id)
+                .brand("brand" + id)
+                .model("model" + id)
+                .descriptiveName("Cool Model " + id)
+                .comment("New device" + id);
     }
 }
