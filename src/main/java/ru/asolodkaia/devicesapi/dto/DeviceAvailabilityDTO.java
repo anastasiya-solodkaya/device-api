@@ -69,7 +69,7 @@ public class DeviceAvailabilityDTO {
     private void setComment(String comment) {
         this.comment = comment;
     }
-    
+
     public static class Builder {
         private int id;
         private String brand;
@@ -114,7 +114,7 @@ public class DeviceAvailabilityDTO {
             return this;
         }
 
-        public DeviceAvailabilityDTO build(){
+        public DeviceAvailabilityDTO build() {
             final DeviceAvailabilityDTO device = new DeviceAvailabilityDTO();
             device.setId(id);
             device.setBooked(booked);
