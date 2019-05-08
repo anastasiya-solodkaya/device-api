@@ -23,7 +23,7 @@ import java.util.concurrent.Future;
 
 @Service
 public class FonoAPIDeviceSpecificationService implements DeviceSpecificationService {
-    
+
     private final Logger logger = LoggerFactory.getLogger(FonoAPIDeviceSpecificationService.class);
 
     @Value("${fonoapi_token}")
