@@ -2,15 +2,11 @@ package ru.asolodkaia.devicesapi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.asolodkaia.devicesapi.dto.ActionResponseDTO;
-import ru.asolodkaia.devicesapi.dto.DeviceAvailabilityDTO;
-import ru.asolodkaia.devicesapi.dto.DeviceDTO;
-import ru.asolodkaia.devicesapi.dto.DeviceSpecificationDTO;
+import ru.asolodkaia.devicesapi.dto.*;
 import ru.asolodkaia.devicesapi.requests.BookingRequest;
 
 import java.util.ArrayList;
@@ -44,7 +40,7 @@ public class DeviceController {
             produces = {DEFAULT_CONTENT_TYPE}
     )
     @ResponseStatus(HttpStatus.OK)
-    public CollectionModel<EntityModel<DeviceDTO>> list() {
+    public EntityModel<DeviceListDTO> list() {
         List<DeviceAvailabilityDTO> devices = devicesService.listAllDevices();
         List<DeviceSpecificationDTO> specs = loadAllSpecifications(devices);
         List<EntityModel<DeviceDTO>> deviceDtos =
@@ -106,8 +102,8 @@ public class DeviceController {
         return model;
     }
 
-    private CollectionModel<EntityModel<DeviceDTO>> wrapHateoas(List<EntityModel<DeviceDTO>> models) {
-        CollectionModel<EntityModel<DeviceDTO>> model = new CollectionModel<>(models);
+    private EntityModel<DeviceListDTO> wrapHateoas(List<EntityModel<DeviceDTO>> models) {
+        EntityModel<DeviceListDTO> model = new EntityModel<>(new DeviceListDTO(models));
         WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).list());
         model.add(linkTo.withRel("self"));
         return model;
