@@ -19,7 +19,7 @@ public class Model {
     @JoinColumn(name="brand_id", nullable=false)
     private Brand brand;
 
-    @OneToMany(mappedBy = "dto")
+    @OneToMany(mappedBy = "model")
     private Set<AvailableDevice> devices;
 
     public int getId() {
