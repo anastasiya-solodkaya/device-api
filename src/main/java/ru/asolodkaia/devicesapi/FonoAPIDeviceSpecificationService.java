@@ -23,7 +23,7 @@ import java.util.concurrent.Future;
 
 @Service
 public class FonoAPIDeviceSpecificationService implements DeviceSpecificationService {
-    Logger logger = LoggerFactory.getLogger(FonoAPIDeviceSpecificationService.class);
+    private final Logger logger = LoggerFactory.getLogger(FonoAPIDeviceSpecificationService.class);
 
 
     @Value("${fonoapi_token}")
@@ -54,13 +54,12 @@ public class FonoAPIDeviceSpecificationService implements DeviceSpecificationSer
                 return null;
             }
             FonoDevice device = allDevices.get(0);
-            DeviceSpecificationDTO spec = new DeviceSpecificationDTO(
+            return new DeviceSpecificationDTO(
                     device.get_2g_bands(),
                     device.get_3g_bands(),
                     device.get_4g_bands(),
                     device.getTechnology()
             );
-            return spec;
         } catch (IOException e) {
             logger.error("Unable to parse server response", e);
             return null;

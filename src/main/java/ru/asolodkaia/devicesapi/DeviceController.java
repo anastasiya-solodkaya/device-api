@@ -1,16 +1,14 @@
-package ru.asolodkaia.devicesapi.api;
+package ru.asolodkaia.devicesapi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.asolodkaia.devicesapi.DeviceSpecificationService;
-import ru.asolodkaia.devicesapi.DevicesService;
-import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
 import ru.asolodkaia.devicesapi.dto.ActionResponseDTO;
 import ru.asolodkaia.devicesapi.dto.DeviceAvailabilityDTO;
 import ru.asolodkaia.devicesapi.dto.DeviceDTO;
 import ru.asolodkaia.devicesapi.dto.DeviceSpecificationDTO;
+import ru.asolodkaia.devicesapi.requests.BookingRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +20,16 @@ import java.util.stream.IntStream;
 @RestController
 @RequestMapping("/devices")
 public class DeviceController {
-    Logger logger = LoggerFactory.getLogger(DeviceController.class);
+    private final Logger logger = LoggerFactory.getLogger(DeviceController.class);
 
     private final static String DEFAULT_CONTENT_TYPE = "application/json";
 
-    private DevicesService devicesService;
-    private DeviceSpecificationService specService;
+    private final DeviceAvailabilityService devicesService;
+
+    private final DeviceSpecificationService specService;
 
 
-    public DeviceController(DevicesService devicesService, DeviceSpecificationService specService) {
+    public DeviceController(DeviceAvailabilityService devicesService, DeviceSpecificationService specService) {
         this.devicesService = devicesService;
         this.specService = specService;
     }
@@ -59,7 +58,7 @@ public class DeviceController {
             try {
                 spec = tasks.get(i).get();
             } catch (InterruptedException | ExecutionException e) {
-                logger.error("Unable to recieve specification from fonoAPI", e);
+                logger.error("Unable to receive specification from fonoAPI", e);
             }
             specs.add(spec);
         }

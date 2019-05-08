@@ -1,4 +1,4 @@
-package ru.asolodkaia.devicesapi.api;
+package ru.asolodkaia.devicesapi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.asolodkaia.devicesapi.NoSuchDeviceException;
 import ru.asolodkaia.devicesapi.dto.ErrorDTO;
 
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 @RestController
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
-    Logger logger = LoggerFactory.getLogger(AppExceptionHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(AppExceptionHandler.class);
 
     @ExceptionHandler(NoSuchDeviceException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -39,7 +38,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         logger.debug("Exception happened during request execution", ex);
 
         ErrorDTO errorDetails = new ErrorDTO(
-                "Internal error occured", LocalDateTime.now(),
+                "Internal error occurred", LocalDateTime.now(),
                 request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }

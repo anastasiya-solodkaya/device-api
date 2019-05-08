@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DeviceSpecificationDTO {
-    private String bands2g;
-    private String bands3g;
-    private String bands4g;
-    private String technology;
+    private final String bands2g;
+    private final String bands3g;
+    private final String bands4g;
+    private final String technology;
 
     public DeviceSpecificationDTO(String bands2g, String bands3g, String bands4g, String technology) {
         this.bands2g = bands2g;

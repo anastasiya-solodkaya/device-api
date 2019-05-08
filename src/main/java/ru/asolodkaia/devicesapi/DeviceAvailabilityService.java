@@ -4,7 +4,7 @@ import ru.asolodkaia.devicesapi.dto.DeviceAvailabilityDTO;
 
 import java.util.List;
 
-public interface DevicesService {
+public interface DeviceAvailabilityService {
 
     List<DeviceAvailabilityDTO> listAllDevices();
 

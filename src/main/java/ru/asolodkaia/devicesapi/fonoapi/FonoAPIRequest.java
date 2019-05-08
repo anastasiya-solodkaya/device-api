@@ -1,9 +1,9 @@
 package ru.asolodkaia.devicesapi.fonoapi;
 
 public class FonoAPIRequest {
-    private String token;
-    private String brand;
-    private String device;
+    private final String token;
+    private final String brand;
+    private final String device;
 
     public FonoAPIRequest(String token, String brand, String device) {
         this.token = token;

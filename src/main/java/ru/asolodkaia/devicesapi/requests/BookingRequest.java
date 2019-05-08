@@ -1,4 +1,4 @@
-package ru.asolodkaia.devicesapi.api.requests;
+package ru.asolodkaia.devicesapi.requests;
 
 import javax.validation.constraints.NotNull;
 

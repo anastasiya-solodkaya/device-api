@@ -1,6 +1,6 @@
 package ru.asolodkaia.devicesapi;
 
-public class NoSuchDeviceException extends RuntimeException {
+class NoSuchDeviceException extends RuntimeException {
     private final int id;
 
     public NoSuchDeviceException(int id) {

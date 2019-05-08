@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class JPADevicesService implements DevicesService {
-    AvailableDeviceRepository repository;
+public class JPADeviceAvailabilityService implements DeviceAvailabilityService {
+    private final AvailableDeviceRepository repository;
 
-    public JPADevicesService(AvailableDeviceRepository repository) {
+    public JPADeviceAvailabilityService(AvailableDeviceRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public List<DeviceAvailabilityDTO> listAllDevices() {
-        return repository.findAll().stream().map(JPADevicesService::toDevice).collect(Collectors.toList());
+        return repository.findAll().stream().map(JPADeviceAvailabilityService::toDevice).collect(Collectors.toList());
     }
 
     @Override
