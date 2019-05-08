@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ActionResponseDTO {
-    private boolean success;
-    private String booker;
+    private final boolean success;
+    private final String booker;
 
     public ActionResponseDTO(boolean success, String booker) {
         this.success = success;
@@ -13,7 +13,7 @@ public class ActionResponseDTO {
     }
 
     public ActionResponseDTO(boolean success) {
-        this.success = success;
+        this(success, null);
     }
 
     public boolean isSuccess() {

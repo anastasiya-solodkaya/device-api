@@ -1,10 +1,11 @@
 package ru.asolodkaia.devicesapi;
 
 public class NoSuchDeviceException extends RuntimeException {
-    private int id;
+    private final int id;
 
     public NoSuchDeviceException(int id) {
         super(String.format("No device with id=%d found.", id));
+        this.id = id;
     }
 
     public int getId() {

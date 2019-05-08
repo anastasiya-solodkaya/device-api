@@ -19,7 +19,7 @@ public class DeviceController {
         this.service = service;
     }
 
-    private static final String DEFAULT_CONTENT_TYPE = "application/json";
+    private final static String DEFAULT_CONTENT_TYPE = "application/json";
 
     @GetMapping(
             produces = {DEFAULT_CONTENT_TYPE}
@@ -37,7 +37,7 @@ public class DeviceController {
     @ResponseStatus(HttpStatus.OK)
     public ActionResponseDTO book(@PathVariable int id, @RequestBody BookingRequest request) {
         boolean result = service.book(id, request.getBooker());
-        final DeviceDTO device = service.get(id);
+        DeviceDTO device = service.get(id);
         return new ActionResponseDTO(result, device.getBooker());
     }
 

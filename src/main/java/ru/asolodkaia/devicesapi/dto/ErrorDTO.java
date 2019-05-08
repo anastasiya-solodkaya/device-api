@@ -3,9 +3,9 @@ package ru.asolodkaia.devicesapi.dto;
 import java.time.LocalDateTime;
 
 public class ErrorDTO {
-    private String reason;
-    private LocalDateTime dateTime;
-    private String request;
+    private final String reason;
+    private final LocalDateTime dateTime;
+    private final String request;
 
     public ErrorDTO(String reason, LocalDateTime dateTime, String request) {
         this.reason = reason;
