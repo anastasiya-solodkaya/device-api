@@ -1,4 +1,4 @@
-package ru.asolodkaia.devicesapi.api.model;
+package ru.asolodkaia.devicesapi.model;
 
 public class ActionResponse {
     private boolean success;

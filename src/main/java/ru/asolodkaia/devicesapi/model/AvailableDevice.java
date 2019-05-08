@@ -1,4 +1,4 @@
-package ru.asolodkaia.devicesapi.api.model;
+package ru.asolodkaia.devicesapi.model;
 
 import java.util.Date;
 
