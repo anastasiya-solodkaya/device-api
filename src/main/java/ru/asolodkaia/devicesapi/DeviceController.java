@@ -82,8 +82,7 @@ public class DeviceController {
 
     @PutMapping(
             value = "/{id}/release",
-            produces = {DEFAULT_CONTENT_TYPE},
-            consumes = {DEFAULT_CONTENT_TYPE}
+            produces = {DEFAULT_CONTENT_TYPE}
     )
     @ResponseStatus(HttpStatus.OK)
     public ActionResponseDTO release(@PathVariable int id) {

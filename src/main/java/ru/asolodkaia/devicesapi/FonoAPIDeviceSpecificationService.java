@@ -32,18 +32,22 @@ public class FonoAPIDeviceSpecificationService implements DeviceSpecificationSer
     @Value("${fonoapi.url}")
     private String url;
 
+    private RestTemplate template;
+
+    public FonoAPIDeviceSpecificationService(RestTemplate template) {
+        this.template = template;
+    }
 
     @Override
     @Async
     public Future<DeviceSpecificationDTO> findDevice(String brand, String model) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("User-Agent", "Mozilla/5.0");
 
         FonoAPIRequest requestData = new FonoAPIRequest(token, brand, model);
         HttpEntity<FonoAPIRequest> request = new HttpEntity<>(requestData, headers);
 
-        String response = restTemplate.postForObject(url, request, String.class);
+        String response = template.postForObject(url, request, String.class);
         return new AsyncResult<>(parseResponse(response));
     }
 
