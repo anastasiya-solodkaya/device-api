@@ -38,7 +38,8 @@ public class DeviceController {
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse book(@PathVariable int id, @RequestBody BookingRequest request) {
         boolean result = service.book(id, request.getBooker());
-        return new ActionResponse(result);
+        final AvailableDevice device = service.get(id);
+        return new ActionResponse(result, device.getBooker());
     }
 
     @PutMapping(
