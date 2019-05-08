@@ -1,5 +1,7 @@
 # REST API for accessing devices data
 
+UI is available here: http://devices-app.herokuapp.com/
+
 
 1. New Spring Rest HATEOAS have some unpredictable behaviour (NPE in some basic cases), so its not used in app on UI side (consider not fully supported)
 1. Swagger documentation not attached since time is very limited
