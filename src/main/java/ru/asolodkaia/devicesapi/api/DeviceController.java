@@ -2,6 +2,7 @@ package ru.asolodkaia.devicesapi.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.asolodkaia.devicesapi.DevicesService;
 import ru.asolodkaia.devicesapi.model.ActionResponse;
 import ru.asolodkaia.devicesapi.model.AvailableDevice;
 import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
@@ -13,6 +14,12 @@ import java.util.List;
 @RequestMapping("/devices")
 public class DeviceController {
 
+    private DevicesService service;
+
+    public DeviceController(DevicesService service) {
+        this.service = service;
+    }
+
     private static final String DEFAULT_CONTENT_TYPE = "application/json";
 
     @GetMapping(
@@ -20,7 +27,7 @@ public class DeviceController {
     )
     @ResponseStatus(HttpStatus.OK)
     public List<AvailableDevice> list() {
-        return Collections.emptyList();
+        return service.listAllDevices();
     }
 
     @PutMapping(
@@ -30,7 +37,8 @@ public class DeviceController {
     )
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse book(@PathVariable int id, @RequestBody BookingRequest request) {
-        return new ActionResponse(true);
+        final boolean result = service.book(id, request.getBooker());
+        return new ActionResponse(result);
     }
 
     @PutMapping(
@@ -40,6 +48,7 @@ public class DeviceController {
     )
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse release(@PathVariable int id) {
-        return new ActionResponse(true);
+        final boolean result = service.release(id);
+        return new ActionResponse(result);
     }
 }

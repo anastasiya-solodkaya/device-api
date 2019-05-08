@@ -1,13 +1,33 @@
 package ru.asolodkaia.devicesapi.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AvailableDevice {
+    private int id;
     private String brand;
     private String model;
     private String descriptiveName;
     private String booker;
-    private Date booked;
+    private LocalDateTime booked;
+
+    public AvailableDevice(int id, String brand, String model, String descriptiveName,
+                           String booker, LocalDateTime booked) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.descriptiveName = descriptiveName;
+        this.booker = booker;
+        this.booked = booked;
+    }
+
+    public AvailableDevice(int id, String brand, String model, String descriptiveName) {
+        this(id, brand, model, descriptiveName, null, null);
+    }
+
+
+    public int getId() {
+        return id;
+    }
 
     public String getBrand() {
         return brand;
@@ -41,11 +61,11 @@ public class AvailableDevice {
         this.booker = booker;
     }
 
-    public Date getBooked() {
+    public LocalDateTime getBooked() {
         return booked;
     }
 
-    public void setBooked(Date booked) {
+    public void setBooked(LocalDateTime booked) {
         this.booked = booked;
     }
 }
