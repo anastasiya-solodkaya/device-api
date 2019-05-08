@@ -1,6 +1,5 @@
 package ru.asolodkaia.devicesapi;
 
-import org.mockito.internal.verification.Times;
 import org.springframework.stereotype.Service;
 import ru.asolodkaia.devicesapi.database.model.AvailableDevice;
 import ru.asolodkaia.devicesapi.database.repository.AvailableDeviceRepository;

@@ -3,9 +3,9 @@ package ru.asolodkaia.devicesapi.api;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.asolodkaia.devicesapi.DevicesService;
+import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
 import ru.asolodkaia.devicesapi.dto.ActionResponseDTO;
 import ru.asolodkaia.devicesapi.dto.DeviceDTO;
-import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ public class AvailableDevice {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="model_id", nullable=false)
+    @JoinColumn(name = "model_id", nullable = false)
     private Model model;
 
     @Column(name = "device_comment", length = 150)

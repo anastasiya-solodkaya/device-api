@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("ru.asolodkaia.devicesapi.database.repository")
 public class DevicesApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DevicesApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DevicesApiApplication.class, args);
+    }
 
 }

@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface AvailableDeviceRepository extends JpaRepository<AvailableDevice, Integer> {
     AvailableDevice findById(int id);
+
     List<AvailableDevice> findAll();
 }

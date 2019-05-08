@@ -16,7 +16,7 @@ public class Model {
     private String descriptiveName;
 
     @ManyToOne
-    @JoinColumn(name="brand_id", nullable=false)
+    @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
     @OneToMany(mappedBy = "model")
