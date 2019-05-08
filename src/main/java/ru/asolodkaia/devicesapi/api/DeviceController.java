@@ -4,10 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.asolodkaia.devicesapi.DevicesService;
 import ru.asolodkaia.devicesapi.model.ActionResponse;
-import ru.asolodkaia.devicesapi.model.AvailableDevice;
+import ru.asolodkaia.devicesapi.model.Device;
 import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,7 +25,7 @@ public class DeviceController {
             produces = {DEFAULT_CONTENT_TYPE}
     )
     @ResponseStatus(HttpStatus.OK)
-    public List<AvailableDevice> list() {
+    public List<Device> list() {
         return service.listAllDevices();
     }
 
@@ -38,7 +37,7 @@ public class DeviceController {
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse book(@PathVariable int id, @RequestBody BookingRequest request) {
         boolean result = service.book(id, request.getBooker());
-        final AvailableDevice device = service.get(id);
+        final Device device = service.get(id);
         return new ActionResponse(result, device.getBooker());
     }
 

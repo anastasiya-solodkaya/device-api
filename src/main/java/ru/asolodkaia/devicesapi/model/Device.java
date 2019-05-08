@@ -2,16 +2,20 @@ package ru.asolodkaia.devicesapi.model;
 
 import java.time.LocalDateTime;
 
-public class AvailableDevice {
+public class Device {
     private int id;
     private String brand;
     private String model;
     private String descriptiveName;
     private String booker;
     private LocalDateTime booked;
+    private String comment;
 
-    public AvailableDevice(int id, String brand, String model, String descriptiveName,
-                           String booker, LocalDateTime booked) {
+    public Device() {
+    }
+
+    public Device(int id, String brand, String model, String descriptiveName,
+                  String booker, LocalDateTime booked) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -20,10 +24,13 @@ public class AvailableDevice {
         this.booked = booked;
     }
 
-    public AvailableDevice(int id, String brand, String model, String descriptiveName) {
+    public Device(int id, String brand, String model, String descriptiveName) {
         this(id, brand, model, descriptiveName, null, null);
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -67,5 +74,13 @@ public class AvailableDevice {
 
     public void setBooked(LocalDateTime booked) {
         this.booked = booked;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

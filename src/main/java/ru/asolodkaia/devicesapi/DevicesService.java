@@ -1,14 +1,14 @@
 package ru.asolodkaia.devicesapi;
 
-import ru.asolodkaia.devicesapi.model.AvailableDevice;
+import ru.asolodkaia.devicesapi.model.Device;
 
 import java.util.List;
 
 public interface DevicesService {
 
-    List<AvailableDevice> listAllDevices();
+    List<Device> listAllDevices();
 
-    AvailableDevice get(int id);
+    Device get(int id);
 
     boolean book(int id, String booker);
 

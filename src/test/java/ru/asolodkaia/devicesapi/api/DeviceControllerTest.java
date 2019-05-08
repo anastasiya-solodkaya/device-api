@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.asolodkaia.devicesapi.DevicesService;
 import ru.asolodkaia.devicesapi.api.requests.BookingRequest;
 import ru.asolodkaia.devicesapi.model.ActionResponse;
-import ru.asolodkaia.devicesapi.model.AvailableDevice;
+import ru.asolodkaia.devicesapi.model.Device;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ public class DeviceControllerTest {
     @Test
     public void listEmpty() {
         when(service.listAllDevices()).thenReturn(Collections.emptyList());
-        final List<AvailableDevice> list = controller.list();
+        final List<Device> list = controller.list();
         assertThat(list, is(empty()));
         verify(service, times(1)).listAllDevices();
         verifyNoMoreInteractions(service);
@@ -44,13 +44,13 @@ public class DeviceControllerTest {
 
     @Test
     public void listNonEmpty() {
-        final List<AvailableDevice> expected = Arrays.asList(
-                new AvailableDevice(1, "samsung", "s7", "Samsung Galaxy S7"),
-                new AvailableDevice(2, "samsung", "s8", "Samsung Galaxy S8",
+        final List<Device> expected = Arrays.asList(
+                new Device(1, "samsung", "s7", "Samsung Galaxy S7"),
+                new Device(2, "samsung", "s8", "Samsung Galaxy S8",
                         "Mr. John", LocalDateTime.parse("2019-01-21T05:30:00"))
         );
         when(service.listAllDevices()).thenReturn(expected);
-        final List<AvailableDevice> list = controller.list();
+        final List<Device> list = controller.list();
         assertThat(list, is(expected));
         verify(service, times(1)).listAllDevices();
         verifyNoMoreInteractions(service);
@@ -59,8 +59,8 @@ public class DeviceControllerTest {
     @Test
     public void bookExistingSucceeded() {
         String expectedBooker = "Mr. Josh";
-        AvailableDevice device =
-                new AvailableDevice(1, "", "", "", expectedBooker, LocalDateTime.now());
+        Device device =
+                new Device(1, "", "", "", expectedBooker, LocalDateTime.now());
         BookingRequest request = new BookingRequest();
         request.setBooker(expectedBooker);
 
@@ -78,8 +78,8 @@ public class DeviceControllerTest {
     @Test
     public void bookExistingFailed() {
         String expectedBooker = "Mr. Josh";
-        AvailableDevice device =
-                new AvailableDevice(1, "", "", "", expectedBooker, LocalDateTime.now());
+        Device device =
+                new Device(1, "", "", "", expectedBooker, LocalDateTime.now());
         BookingRequest request = new BookingRequest();
         request.setBooker("Ms. Naya");
 
