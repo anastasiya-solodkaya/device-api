@@ -37,7 +37,7 @@ public class DeviceController {
     )
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse book(@PathVariable int id, @RequestBody BookingRequest request) {
-        final boolean result = service.book(id, request.getBooker());
+        boolean result = service.book(id, request.getBooker());
         return new ActionResponse(result);
     }
 
@@ -48,7 +48,7 @@ public class DeviceController {
     )
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse release(@PathVariable int id) {
-        final boolean result = service.release(id);
+        boolean result = service.release(id);
         return new ActionResponse(result);
     }
 }

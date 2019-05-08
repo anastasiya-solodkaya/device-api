@@ -8,6 +8,8 @@ public interface DevicesService {
 
     List<AvailableDevice> listAllDevices();
 
+    AvailableDevice get(int id);
+
     boolean book(int id, String booker);
 
     boolean release(int id);
