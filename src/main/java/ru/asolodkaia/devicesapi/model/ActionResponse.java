@@ -1,7 +1,8 @@
 package ru.asolodkaia.devicesapi.model;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ActionResponse {
     private boolean success;
     private String booker;
