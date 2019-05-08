@@ -2,6 +2,9 @@ package ru.asolodkaia.devicesapi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.asolodkaia.devicesapi.dto.ActionResponseDTO;
@@ -16,6 +19,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/devices")
@@ -38,14 +44,15 @@ public class DeviceController {
             produces = {DEFAULT_CONTENT_TYPE}
     )
     @ResponseStatus(HttpStatus.OK)
-    public List<DeviceDTO> list() {
+    public CollectionModel<EntityModel<DeviceDTO>> list() {
         List<DeviceAvailabilityDTO> devices = devicesService.listAllDevices();
         List<DeviceSpecificationDTO> specs = loadAllSpecifications(devices);
-        List<DeviceDTO> deviceDtos =
+        List<EntityModel<DeviceDTO>> deviceDtos =
                 IntStream.range(0, devices.size())
                         .mapToObj(i -> new DeviceDTO(devices.get(i), specs.get(i)))
+                        .map(this::wrapHateoas)
                         .collect(Collectors.toList());
-        return deviceDtos;
+        return wrapHateoas(deviceDtos);
     }
 
     private List<DeviceSpecificationDTO> loadAllSpecifications(List<DeviceAvailabilityDTO> devices) {
@@ -66,7 +73,7 @@ public class DeviceController {
     }
 
     @PutMapping(
-            value = "/{id}",
+            value = "/{id}/book",
             produces = {DEFAULT_CONTENT_TYPE},
             consumes = {DEFAULT_CONTENT_TYPE}
     )
@@ -86,5 +93,23 @@ public class DeviceController {
     public ActionResponseDTO release(@PathVariable int id) {
         boolean result = devicesService.release(id);
         return new ActionResponseDTO(result);
+    }
+
+    private EntityModel<DeviceDTO> wrapHateoas(DeviceDTO device) {
+        int deviceId = device.getAvailability().getId();
+        EntityModel<DeviceDTO> model = new EntityModel<>(device);
+        WebMvcLinkBuilder bookLink = linkTo(methodOn(this.getClass()).book(deviceId, null));
+        model.add(bookLink.withRel("book"));
+        // Spring Rest HATEOAS bug? NPE just because of one typical link.
+//        WebMvcLinkBuilder releaseLink = linkTo(methodOn(this.getClass()).release(deviceId));
+//        model.add(releaseLink.withRel("release"));
+        return model;
+    }
+
+    private CollectionModel<EntityModel<DeviceDTO>> wrapHateoas(List<EntityModel<DeviceDTO>> models) {
+        CollectionModel<EntityModel<DeviceDTO>> model = new CollectionModel<>(models);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).list());
+        model.add(linkTo.withRel("self"));
+        return model;
     }
 }
